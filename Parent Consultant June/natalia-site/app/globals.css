@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: #fffaf0;
+  color: #0a0a0a;
+  font-family: var(--font-inter), 'Assistant', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Badge tones */
+.badge { display: inline-flex; align-items: center; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; border-radius: 100px; padding: 4px 12px; }
+.badge-peach  { background: #fff0e6; color: #c06030; border: 1px solid #ffd4b8; }
+.badge-mint   { background: #e6f5f1; color: #2f7a5e; border: 1px solid #b8e2d6; }
+.badge-ochre  { background: #fef7e0; color: #8a6010; border: 1px solid #f0d880; }
+.badge-lavender { background: #f0ecff; color: #6040a0; border: 1px solid #d4c8f8; }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--font-inter), 'Assistant', system-ui, sans-serif;
+  font-weight: 600; border-radius: 100px; text-decoration: none;
+  border: none; cursor: pointer;
+  transition: opacity 0.15s, background 0.15s, border-color 0.15s, transform 0.18s cubic-bezier(0.22,1,0.36,1), box-shadow 0.18s ease;
+  white-space: nowrap;
+}
+.btn:active { transform: translateY(0) scale(0.98); }
+.btn-primary  { background: #0a0a0a; color: #ffffff; }
+.btn-primary:hover { opacity: 0.92; transform: translateY(-2px); box-shadow: 0 10px 24px rgba(10,10,10,0.22); }
+.btn-secondary { background: transparent; color: #0a0a0a; border: 1.5px solid rgba(10,10,10,0.22); }
+.btn-secondary:hover { border-color: rgba(10,10,10,0.44); background: rgba(10,10,10,0.03); }
+.btn-ghost { background: transparent; color: #4a4a4a; border: 1px solid rgba(10,10,10,0.14); }
+.btn-ghost:hover { background: rgba(10,10,10,0.04); }
+.btn-sm  { font-size: 14px; padding: 8px 18px; }
+.btn-md  { font-size: 15px; padding: 11px 24px; }
+.btn-lg  { font-size: 16px; padding: 14px 30px; }
+
+/* Nav */
+@media (max-width: 768px) {
+  .ns-nav-desktop { display: none !important; }
+  .ns-hide-sm     { display: none !important; }
+  .ns-burger      { display: flex !important; }
+}
+.nav-link:hover { background: rgba(10,10,10,0.05); }
+
+/* Pricing card dark variant */
+.pricing-featured {
+  background: #1a3a3a !important;
+  border-color: #1a3a3a !important;
+}
+.pricing-featured .card-price,
+.pricing-featured .card-name { color: #ffffff !important; }
+.pricing-featured .card-period,
+.pricing-featured .card-desc  { color: rgba(255,255,255,0.64) !important; }
+.pricing-featured .feature-item { color: rgba(255,255,255,0.82) !important; }
+.pricing-featured .check-circle {
+  background: rgba(255,255,255,0.14) !important;
+  color: #a4d4c5 !important;
+}
+.pricing-featured .divider { border-color: rgba(255,255,255,0.12) !important; }
+.pricing-featured .btn-cta {
+  background: #ffffff !important;
+  color: #1a3a3a !important;
+}
+.pricing-featured .btn-cta:hover { opacity: 0.9; }
+
+/* ─────────────────────────────────────────────
+   MOTION
+─────────────────────────────────────────────── */
+
+/* Signature clay blobs — slow infinite float */
+@keyframes ns-float-a {
+  0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  50%      { transform: translate(7px, -12px) rotate(6deg) scale(1.04); }
+}
+@keyframes ns-float-b {
+  0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  50%      { transform: translate(-9px, 9px) rotate(-7deg) scale(1.05); }
+}
+.blob-a { animation: ns-float-a 11s ease-in-out infinite; will-change: transform; }
+.blob-b { animation: ns-float-b 9s  ease-in-out infinite; will-change: transform; }
+
+/* Entrance fade-up (hero load-in + scroll reveals) */
+@keyframes ns-fade-up {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Hero: orchestrated staggered load-in of left column + photo */
+.hero-stagger > * { opacity: 0; animation: ns-fade-up 0.7s cubic-bezier(0.22,1,0.36,1) both; }
+.hero-stagger > *:nth-child(1) { animation-delay: 0.05s; }
+.hero-stagger > *:nth-child(2) { animation-delay: 0.13s; }
+.hero-stagger > *:nth-child(3) { animation-delay: 0.21s; }
+.hero-stagger > *:nth-child(4) { animation-delay: 0.29s; }
+.hero-stagger > *:nth-child(5) { animation-delay: 0.37s; }
+.hero-photo-reveal { opacity: 0; animation: ns-fade-up 0.9s cubic-bezier(0.22,1,0.36,1) 0.30s both; }
+
+/* Scroll-triggered reveals (toggled by IntersectionObserver -> .io-in) */
+.io-up {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+  transition-delay: var(--d, 0s);
+}
+.io-up.io-in { opacity: 1; transform: none; }
+
+/* Cards: fade-in on scroll (staggered) + lift on hover, single class avoids transform conflict */
+.io-card {
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.28s cubic-bezier(0.22,1,0.36,1), box-shadow 0.28s ease, border-color 0.28s ease;
+  transition-delay: var(--d, 0s), 0s, 0s, 0s;
+}
+.io-card.io-in { opacity: 1; }
+.io-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(10,10,10,0.10);
+  border-color: var(--hover-border, rgba(10,10,10,0.16));
+}
+/* Featured pricing card gets a stronger lift since it's the conversion target */
+.io-card.pricing-featured:hover { box-shadow: 0 20px 44px rgba(26,58,58,0.30); }
+
+@media (prefers-reduced-motion: reduce) {
+  .blob-a, .blob-b { animation: none; }
+  .hero-stagger > *, .hero-photo-reveal { animation: none; opacity: 1; }
+  .io-up, .io-card { opacity: 1; transform: none; transition: none; }
+  .io-card:hover, .btn-primary:hover { transform: none; }
+}
+
+/* ─────────────────────────────────────────────
+   HERO LAYOUT — two equal columns
+─────────────────────────────────────────────── */
+.hero-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: center; }
+/* Illustration column: decorative blob clipped to the column edge, illustration centered on top */
+.hero-slot { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+@media (max-width: 768px) {
+  .hero-grid { grid-template-columns: 1fr; }
+}
