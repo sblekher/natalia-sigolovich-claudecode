@@ -422,7 +422,15 @@ export default function Page() {
 
   useEffect(() => {
     let l: Lang = "ru";
-    try { const s = localStorage.getItem("ns_lang"); if (s === "he" || s === "ru") l = s; } catch (_) {}
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlLang = urlParams.get("lang");
+      if (urlLang === "he" || urlLang === "ru") {
+        l = urlLang;
+      } else {
+        try { const s = localStorage.getItem("ns_lang"); if (s === "he" || s === "ru") l = s; } catch (_) {}
+      }
+    }
     let ck = true;
     try { ck = !localStorage.getItem("ns_cookie"); } catch (_) {}
     document.documentElement.dir = l === "he" ? "rtl" : "ltr";
@@ -551,47 +559,40 @@ export default function Page() {
       {/* ══ ABOUT ══ */}
       <section id="about" style={{ padding: "clamp(56px,9vw,104px) 0" }}>
         <div style={mw}>
-          <div className="io-up" style={{ maxWidth: 680, marginBottom: "clamp(30px,4vw,48px)" }}>
-            <Eyebrow>{t.about.eyebrow}</Eyebrow>
-            <h2 style={{ margin: "12px 0 8px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: "clamp(30px,4.8vw,46px)", lineHeight: 1.06, letterSpacing: "-1.4px", color: "#0a0a0a" }}>{t.about.title}</h2>
-            <p style={{ margin: 0, fontSize: 17, lineHeight: 1.5, color: "#6a6a6a" }}>{t.about.subtitle}</p>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))", gap: "clamp(28px,4vw,56px)", alignItems: "start" }}>
-            <div className="io-up">
-              {t.about.who.map((p, i) => <p key={i} style={{ margin: "0 0 18px", fontSize: 16, lineHeight: 1.65, color: "#3a3a3a" }}>{p}</p>)}
-              <h3 style={{ margin: "30px 0 12px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 22, letterSpacing: "-0.4px", color: "#0a0a0a" }}>{t.about.whyTitle}</h3>
-              {t.about.why.map((p, i) => <p key={i} style={{ margin: "0 0 16px", fontSize: 16, lineHeight: 1.65, color: "#3a3a3a" }}>{p}</p>)}
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 24 }}>
+          <div className="about-grid">
+            
+            {/* Left Column (Photo & Name) */}
+            <div className="about-left io-up">
+              <div className="about-photo-wrapper">
+                <div className="about-blob-top-right" />
+                <div className="about-blob-bottom-left" />
+                <div className="about-image-container">
+                  <Image src="/natalia.jpg" alt={t.about.title} width={600} height={800} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                </div>
+              </div>
+              <h3 className="about-name">{t.about.title}</h3>
+              <p className="about-subtitle">{t.about.subtitle}</p>
+            </div>
+            
+            {/* Right Column (Text & Card) */}
+            <div className="about-right io-up" style={{ "--d": "100ms" } as React.CSSProperties}>
+              <div className="about-eyebrow">
+                <Eyebrow>{t.about.eyebrow}</Eyebrow>
+              </div>
+              <div className="about-bio">
+                {t.about.who.map((p, i) => <p key={i}>{p}</p>)}
+              </div>
+              
+              <div className="about-why-card">
+                <h4>{t.about.whyTitle}</h4>
+                {t.about.why.map((p, i) => <p key={i}>{p}</p>)}
+              </div>
+              
+              <div className="about-badges">
                 {t.about.facts.map(f => <Badge key={f.label} tone={f.tone}>{f.label}</Badge>)}
               </div>
             </div>
-            <div className="io-up" style={{ background: "#faf5e8", border: "1px solid #efe7d6", borderRadius: 20, padding: "clamp(24px,3vw,34px)", "--d": "120ms" } as React.CSSProperties}>
-              <h3 style={{ margin: "0 0 16px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 19, letterSpacing: "-0.3px", color: "#0a0a0a" }}>{t.about.eduTitle}</h3>
-              <ul style={{ listStyle: "none", margin: "0 0 26px", padding: 0, display: "flex", flexDirection: "column", gap: 12 }}>
-                {t.about.edu.map((e, i) => (
-                  <li key={i} style={{ position: "relative", paddingInlineStart: 20, fontSize: 15, lineHeight: 1.55, color: "#4a4a4a" }}>
-                    <span style={{ position: "absolute", insetInlineStart: 0, top: 9, width: 7, height: 7, borderRadius: "50%", background: "#c79a5e" }} />{e}
-                  </li>
-                ))}
-              </ul>
-              <h3 style={{ margin: "0 0 14px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 19, letterSpacing: "-0.3px", color: "#0a0a0a" }}>{t.about.expTitle}</h3>
-              <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 26 }}>
-                {t.about.exp.map(x => (
-                  <div key={x.year} style={{ display: "flex", gap: 12 }}>
-                    <span style={{ flex: "0 0 auto", minWidth: 92, fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 13, color: "#b07a4a", paddingTop: 1 }}>{x.year}</span>
-                    <span style={{ fontSize: 14, lineHeight: 1.5, color: "#4a4a4a" }}>{x.text}</span>
-                  </div>
-                ))}
-              </div>
-              <h3 style={{ margin: "0 0 14px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 19, letterSpacing: "-0.3px", color: "#0a0a0a" }}>{t.about.knowTitle}</h3>
-              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 12 }}>
-                {t.about.know.map((k, i) => (
-                  <li key={i} style={{ position: "relative", paddingInlineStart: 20, fontSize: 15, lineHeight: 1.55, color: "#4a4a4a" }}>
-                    <span style={{ position: "absolute", insetInlineStart: 0, top: 9, width: 7, height: 7, borderRadius: "50%", background: "#a4d4c5" }} />{k}
-                  </li>
-                ))}
-              </ul>
-            </div>
+
           </div>
         </div>
       </section>
