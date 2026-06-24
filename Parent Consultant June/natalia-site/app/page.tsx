@@ -531,24 +531,19 @@ export default function Page() {
 
       {/* ══ REQUESTS ══ */}
       <section className="requests-section" style={{ padding: "clamp(52px,8vw,96px) 0", background: "#e6f5f1" }}>
-        <div style={{ ...mw, display: "flex", alignItems: "stretch", gap: "clamp(24px,3vw,48px)" }}>
-          <div className="requests-illus" style={{ flexShrink: 0, width: 210, alignSelf: "flex-end" }}>
-            <Image src="/requests-illustration.png" alt="" width={1254} height={1254} style={{ width: "100%", height: "auto", display: "block" }} />
+        <div style={mw}>
+          <div className="io-up" style={{ maxWidth: 620, marginBottom: "clamp(28px,4vw,44px)" }}>
+            <Eyebrow>{t.requests.eyebrow}</Eyebrow>
+            <RubikH2>{t.requests.title}</RubikH2>
           </div>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div className="io-up" style={{ maxWidth: 620, marginBottom: "clamp(28px,4vw,44px)" }}>
-              <Eyebrow>{t.requests.eyebrow}</Eyebrow>
-              <RubikH2>{t.requests.title}</RubikH2>
-            </div>
-            <div className="requests-cards">
-              {t.requests.items.map((item, i) => (
-                <div key={item.title} className="io-card" style={{ background: "#fffaf0", border: "1px solid #efe7d6", borderRadius: 16, padding: "26px 24px", "--d": `${i * 80}ms`, "--hover-border": item.color } as React.CSSProperties}>
-                  <span style={{ display: "block", width: 12, height: 12, borderRadius: "50%", background: item.color, boxShadow: "inset -3px -3px 5px rgba(10,10,10,0.14)", marginBottom: 16 }} />
-                  <h3 style={{ margin: "0 0 8px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 19, letterSpacing: "-0.3px", color: "#0a0a0a" }}>{item.title}</h3>
-                  <p style={{ margin: 0, fontSize: 15, lineHeight: 1.55, color: "#5a5a5a" }}>{item.text}</p>
-                </div>
-              ))}
-            </div>
+          <div className="requests-cards">
+            {t.requests.items.map((item, i) => (
+              <div key={item.title} className="io-card" style={{ background: "#fffaf0", border: "1px solid #efe7d6", borderRadius: 16, padding: "26px 24px", "--d": `${i * 80}ms`, "--hover-border": item.color } as React.CSSProperties}>
+                <span style={{ display: "block", width: 12, height: 12, borderRadius: "50%", background: item.color, boxShadow: "inset -3px -3px 5px rgba(10,10,10,0.14)", marginBottom: 16 }} />
+                <h3 style={{ margin: "0 0 8px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 19, letterSpacing: "-0.3px", color: "#0a0a0a" }}>{item.title}</h3>
+                <p style={{ margin: 0, fontSize: 15, lineHeight: 1.55, color: "#5a5a5a" }}>{item.text}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
