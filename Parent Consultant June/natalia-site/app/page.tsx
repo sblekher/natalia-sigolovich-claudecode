@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
 /* ─────────────────────────────────────────────
@@ -419,6 +419,8 @@ export default function Page() {
   const [openFaq, setOpenFaq] = useState<number>(0);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [cookieVisible, setCookieVisible] = useState(false);
+  const [activeDot, setActiveDot] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let l: Lang = "ru";
@@ -459,6 +461,18 @@ export default function Page() {
     els.forEach(el => obs.observe(el));
     return () => obs.disconnect();
   }, [lang]);
+
+  useEffect(() => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const onScroll = () => {
+      const max = el.scrollWidth - el.clientWidth;
+      const idx = max > 0 ? Math.round((Math.abs(el.scrollLeft) / max) * 2) : 0;
+      setActiveDot(Math.min(2, Math.max(0, idx)));
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => el.removeEventListener("scroll", onScroll);
+  }, []);
 
   const switchLang = (l: Lang) => {
     if (l === lang) return;
@@ -518,20 +532,18 @@ export default function Page() {
       <div id="top" />
 
       {/* ══ HERO ══ */}
-      <section style={{ padding: "clamp(44px,7vw,84px) 0 clamp(48px,8vw,90px)", background: "linear-gradient(180deg, #fffaf0 0%, #e6f5f1 100%)" }}>
-        <div className="hero-grid" style={{ ...mw, gap: "clamp(36px,5vw,64px)" }}>
-          <div className="hero-stagger" style={{ background: "#ffffff", border: "1px solid #efe7d6", borderRadius: 20, padding: "clamp(24px,3vw,34px)", boxShadow: "0 1px 3px rgba(10,10,10,0.02), 0 16px 36px rgba(165,155,135,0.08)" }}>
-            <div style={{ display: "inline-flex", marginBottom: 22 }}><Badge tone="mint" uppercase>{t.hero.badge}</Badge></div>
-            <h1 style={{ margin: 0, fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: "clamp(32px,4.8vw,48px)", lineHeight: 1.2, letterSpacing: "-0.5px", color: "#222222" }}>{t.hero.title}</h1>
-            <p style={{ margin: "22px 0 0", fontSize: "clamp(16px,2vw,17px)", lineHeight: 1.55, color: "#4a4a4a", maxWidth: "48ch" }}>{t.hero.subtitle}</p>
-            <a href="#contacts" className="btn btn-primary btn-lg" style={{ width: "100%", marginTop: 32 }}>{t.hero.cta}</a>
-            <p style={{ margin: "14px 0 0", fontSize: 14, color: "#6a6a6a" }}>{t.hero.reassurance}</p>
+      <section className="hero-section" style={{ position: "relative", overflow: "hidden" }}>
+        <div className="hero-grid" style={mw}>
+          <div className="hero-stagger">
+            <div style={{ display: "inline-flex", marginBottom: 24 }}><Badge tone="mint" uppercase>{t.hero.badge}</Badge></div>
+            <h1 className="hero-h1" style={{ margin: "0 0 20px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 700, fontSize: 56, lineHeight: 1.08, letterSpacing: "-0.02em", color: "#0a0a0a" }}>{t.hero.title}</h1>
+            <p className="hero-sub" style={{ margin: "0 0 36px", fontSize: 17, lineHeight: 1.65, color: "#4a4a4a", maxWidth: 420 }}>{t.hero.subtitle}</p>
+            <a href="#contacts" className="btn btn-primary btn-lg hero-cta" style={{ marginBottom: 16 }}>{t.hero.cta}</a>
+            <p className="hero-micro" style={{ margin: 0, fontSize: 13, color: "rgb(140,130,115)" }}>{t.hero.reassurance}</p>
           </div>
           <div className="hero-photo-reveal hero-slot">
-            <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 500, aspectRatio: "1 / 0.88", overflow: "hidden", marginInline: "auto" }}>
-              <div className="illustration-breathe" style={{ width: "100%", height: "auto" }}>
-                <Image src="/family-illustration.png" alt="Иллюстрация семьи с детьми" width={819} height={1024} sizes="(max-width: 768px) 86vw, 500px" priority style={{ width: "100%", height: "auto" }} />
-              </div>
+            <div className="illustration-breathe hero-illus">
+              <Image src="/family-illustration.png" alt="Иллюстрация семьи с детьми" width={819} height={1024} sizes="(max-width: 768px) 86vw, 580px" priority style={{ width: "100%", height: "auto", display: "block" }} />
             </div>
           </div>
         </div>
@@ -557,9 +569,17 @@ export default function Page() {
       </section>
 
       {/* ══ ABOUT ══ */}
-      <section id="about" style={{ padding: "clamp(56px,9vw,104px) 0" }}>
+      <section id="about" style={{ padding: "clamp(56px,9vw,104px) 0", position: "relative", background: "#fffaf0" }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/deco-hand-cream.png"
+          alt=""
+          aria-hidden="true"
+          className="deco-hand"
+          loading="lazy"
+        />
         <div style={mw}>
-          <div className="about-grid">
+          <div className="about-grid" style={{ position: "relative", zIndex: 1 }}>
             
             {/* Left Column (Photo & Name) */}
             <div className="about-left io-up">
@@ -619,41 +639,50 @@ export default function Page() {
       {/* ══ APPROACH ══ */}
       <section id="approach" style={{ padding: "clamp(56px,9vw,104px) 0" }}>
         <div style={mw}>
-          <div className="io-up" style={{ maxWidth: 680, marginBottom: "clamp(28px,4vw,44px)", textAlign: "start" }}>
+          {/* Section header */}
+          <div className="io-up" style={{ maxWidth: 680, marginBottom: "clamp(32px,5vw,52px)", textAlign: "start" }}>
             <Eyebrow>{t.approach.eyebrow}</Eyebrow>
-            <h2 style={{ margin: "12px 0 0", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: "clamp(30px,4.8vw,46px)", lineHeight: 1.06, letterSpacing: "-1.4px", color: "#0a0a0a", textAlign: "start" }}>{t.approach.title}</h2>
+            <h2 style={{ margin: "12px 0 0", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: "clamp(28px,4.8vw,46px)", lineHeight: 1.08, letterSpacing: "-1.2px", color: "#0a0a0a", textAlign: "start" }}>{t.approach.title}</h2>
           </div>
-          <div className="io-up" style={{ background: "#1a3a3a", borderRadius: 24, padding: "clamp(24px,4vw,52px)", marginBottom: 28, textAlign: "start" }}>
-            <h3 style={{ margin: "0 0 20px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: "clamp(24px,3.4vw,32px)", letterSpacing: "-0.6px", lineHeight: 1.2, color: "#ffffff", textAlign: "start" }}>{t.approach.leadTitle}</h3>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(230px, 100%), 1fr))", gap: 20 }}>
-              {t.approach.lead.map((p, i) => <p key={i} style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "rgba(255,255,255,0.85)", textAlign: "start" }}>{p}</p>)}
+
+          {/* Lead dark card */}
+          <div className="io-up" style={{ background: "#1a3a3a", borderRadius: 24, padding: "clamp(28px,4vw,48px)", marginBottom: "clamp(24px,4vw,32px)" }}>
+            <h3 style={{ margin: "0 0 24px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: "clamp(22px,4vw,32px)", lineHeight: 1.15, letterSpacing: "-0.5px", color: "#ffffff", textAlign: "start" }}>{t.approach.leadTitle}</h3>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(240px, 100%), 1fr))", gap: "clamp(24px,4vw,32px)" }}>
+               {t.approach.lead.map((p, i) => (
+                 <p key={i} style={{ margin: 0, fontSize: 14, lineHeight: 1.6, color: "rgba(255,255,255,0.85)", textAlign: "start" }}>{p}</p>
+               ))}
             </div>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(260px, 100%), 1fr))", gap: 18, marginBottom: 40 }}>
+
+          {/* Principle cards */}
+          <div className="io-up" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))", gap: 18, marginBottom: "clamp(48px,7vw,72px)" }}>
             {t.approach.principles.map((pr, i) => (
-              <div key={i} className="io-card" style={{ background: "#faf5e8", border: "1px solid #efe7d6", borderRadius: 16, padding: "26px 24px", "--d": `${i * 80}ms`, textAlign: "start" } as React.CSSProperties}>
-                <h4 style={{ margin: "0 0 10px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 18, letterSpacing: "-0.2px", color: "#0a0a0a", textAlign: "start" }}>{pr.title}</h4>
-                <p style={{ margin: 0, fontSize: 15, lineHeight: 1.6, color: "#5a5a5a", textAlign: "start" }}>{pr.text}</p>
+              <div key={i} className="io-card" style={{ background: "#faf5e8", borderRadius: 16, padding: "26px 24px 28px", "--d": `${i * 80}ms` } as React.CSSProperties}>
+                <h4 style={{ margin: "0 0 10px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 17, letterSpacing: "-0.2px", color: "#0a0a0a", textAlign: "start" }}>{pr.title}</h4>
+                <p style={{ margin: 0, fontSize: 14, lineHeight: 1.65, color: "#6a6a6a", textAlign: "start" }}>{pr.text}</p>
               </div>
             ))}
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(300px, 100%), 1fr))", gap: "clamp(24px,4vw,48px)" }}>
-            <div style={{ textAlign: "start" }}>
-              <h3 style={{ margin: "0 0 18px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 22, letterSpacing: "-0.4px", color: "#0a0a0a", textAlign: "start" }}>{t.approach.notTitle}</h3>
-              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 12 }}>
+
+          {/* Not / Result split - directly on background */}
+          <div className="io-up" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(260px, 100%), 1fr))", gap: "clamp(32px,5vw,56px)" }}>
+            <div>
+              <h3 style={{ margin: "0 0 20px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 17, letterSpacing: "-0.2px", color: "#0a0a0a", textAlign: "start" }}>{t.approach.notTitle}</h3>
+              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 13 }}>
                 {t.approach.not.map((n, i) => (
-                  <li key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", fontSize: 15, lineHeight: 1.55, color: "#5a5a5a", textAlign: "start" }}>
-                    <span style={{ flexShrink: 0, width: 20, height: 20, borderRadius: "50%", background: "#f4e4d6", color: "#c08a5a", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 13, marginTop: 1 }}>✕</span>{n}
+                  <li key={i} style={{ display: "flex", gap: 11, alignItems: "flex-start", fontSize: 14, lineHeight: 1.6, color: "#5a5a5a", textAlign: "start" }}>
+                    <span style={{ flexShrink: 0, width: 20, height: 20, borderRadius: "50%", background: "rgba(235,90,70,0.12)", color: "#d6503c", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 11, marginTop: 1 }}>✕</span>{n}
                   </li>
                 ))}
               </ul>
             </div>
-            <div style={{ textAlign: "start" }}>
-              <h3 style={{ margin: "0 0 18px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 22, letterSpacing: "-0.4px", color: "#0a0a0a", textAlign: "start" }}>{t.approach.resultTitle}</h3>
-              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 12 }}>
+            <div>
+              <h3 style={{ margin: "0 0 20px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 17, letterSpacing: "-0.2px", color: "#0a0a0a", textAlign: "start" }}>{t.approach.resultTitle}</h3>
+              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 13 }}>
                 {t.approach.result.map((r, i) => (
-                  <li key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", fontSize: 15, lineHeight: 1.55, color: "#3a3a3a", textAlign: "start" }}>
-                    <span style={{ flexShrink: 0, width: 20, height: 20, borderRadius: "50%", background: "#d8ece3", color: "#2f7a5e", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 12, marginTop: 1 }}>✓</span>{r}
+                  <li key={i} style={{ display: "flex", gap: 11, alignItems: "flex-start", fontSize: 14, lineHeight: 1.6, color: "#5a5a5a", textAlign: "start" }}>
+                    <span style={{ flexShrink: 0, width: 20, height: 20, borderRadius: "50%", background: "#d8ece3", color: "#2f7a5e", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 11, marginTop: 1 }}>✓</span>{r}
                   </li>
                 ))}
               </ul>
@@ -671,15 +700,15 @@ export default function Page() {
             <p style={{ margin: "0 0 14px", fontSize: 17, lineHeight: 1.5, color: "#6a6a6a" }}>{t.formats.subtitle}</p>
             <p style={{ margin: 0, fontSize: 15, lineHeight: 1.6, color: "#5a5a5a" }}>{t.formats.before}</p>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(282px,1fr))", gap: 20, alignItems: "start" }}>
+          <div ref={carouselRef} className="pricing-carousel" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(282px,1fr))", gap: 20, alignItems: "stretch" }}>
             {t.formats.cards.map((card, i) => (
-              <div key={i} style={{ position: "relative" }}>
+              <div key={i} className="pricing-card-slot" style={{ position: "relative" }}>
                 {i === 2 && (
                   <div style={{ position: "absolute", top: -13, insetInlineStart: 24, zIndex: 2 }}>
                     <Badge tone="ochre" uppercase>{t.formats.recommendedLabel}</Badge>
                   </div>
                 )}
-                <div className={`io-card ${card.featured ? "pricing-featured" : ""}`} style={{ background: "#fffaf0", border: "1px solid #efe7d6", borderRadius: 20, padding: "28px 26px", display: "flex", flexDirection: "column", "--d": `${i * 90}ms` } as React.CSSProperties}>
+                <div className="io-card pricing-highlight" style={{ background: "#fffaf0", border: "1px solid #efe7d6", borderRadius: 20, padding: "28px 26px", display: "flex", flexDirection: "column", height: "100%", "--d": `${i * 90}ms` } as React.CSSProperties}>
                   <p className="card-price" style={{ margin: "0 0 2px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: "clamp(28px,4vw,36px)", letterSpacing: "-1px", color: "#0a0a0a", lineHeight: 1.1 }}>
                     {card.price}<span className="card-period" style={{ fontSize: 15, fontWeight: 400, color: "#8a8a8a", letterSpacing: 0 }}>{" "}{card.period}</span>
                   </p>
@@ -693,9 +722,14 @@ export default function Page() {
                       </li>
                     ))}
                   </ul>
-                  <a href="#contacts" style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "12px 20px", borderRadius: 100, fontSize: 15, fontWeight: 600, textDecoration: "none", background: card.featured ? "#ffffff" : "transparent", color: card.featured ? "#1a3a3a" : "#0a0a0a", border: card.featured ? "none" : "1.5px solid rgba(10,10,10,0.22)", cursor: "pointer", fontFamily: "var(--font-inter,sans-serif)" }}>{t.formats.formatCta}</a>
+                  <a href="#contacts" className="btn-cta" style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "12px 20px", borderRadius: 100, fontSize: 15, fontWeight: 600, textDecoration: "none", background: "transparent", color: "#0a0a0a", border: "1.5px solid rgba(10,10,10,0.22)", cursor: "pointer", fontFamily: "var(--font-inter,sans-serif)" }}>{t.formats.formatCta}</a>
                 </div>
               </div>
+            ))}
+          </div>
+          <div className="pricing-dots" aria-hidden="true">
+            {t.formats.cards.map((_, i) => (
+              <span key={i} className={`pricing-dot${activeDot === i ? " active" : ""}`} />
             ))}
           </div>
           <div style={{ marginTop: 34, display: "flex", flexWrap: "wrap", alignItems: "center", gap: 18, background: "#fffaf0", border: "1px solid #efe7d6", borderRadius: 18, padding: "24px 28px" }}>
