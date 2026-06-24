@@ -155,18 +155,6 @@ body {
   .hero-grid { grid-template-columns: 1fr; }
   .requests-illus { display: none; }
   .requests-cards { grid-template-columns: 1fr; }
-  /* Watermark sits in section's bottom-right, visible in the bottom padding below the cards */
-  .requests-section::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 160px;
-    height: 200px;
-    background: url('/requests-illustration.png') bottom right / contain no-repeat;
-    opacity: 0.33;
-    pointer-events: none;
-  }
 }
 
 /* ─────────────────────────────────────────────
