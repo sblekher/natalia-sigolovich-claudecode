@@ -206,7 +206,7 @@ const C = {
       title: "עם מה הורים פונים אלי",
       items: [
         { title: "התקפות זעם והתנגדות", text: "הילד לא שומע, מתפרץ, מסרב לבקשות. לא ברור מה לעשות עם זה.",               color: "#ffb084" },
-        { title: "תחושת אשמה",           text: "תחושה של «הורה רע», ספקות מתמידים בהחלטות ועייפות מהמעגל הזה.",           color: "#e8b94a" },
+        { title: "תחושת אשמה",           text: "תחושה של \"הורה רע\", ספקות מתמידים בהחלטות ועייפות מהמעגל הזה.",           color: "#e8b94a" },
         { title: "פרצי כעס",             text: "מאבדים שליטה ברגעי משבר. אחר כך סובלים. רוצים לשנות, אבל לא יודעים איך.", color: "#b8a4ed" },
         { title: "גבולות וכללים",        text: "רוצים לבנות סביבה רגועה ובטוחה בבית, שהילד ישמע, לא רק מפחד.",            color: "#a4d4c5" },
       ],
@@ -224,7 +224,7 @@ const C = {
       why: [
         "אני בעצמי אמא לילד נוירו-שונה.",
         "אני יודעת מה זה לעשות הכל נכון ועדיין להתפרץ. יודעת כמה מביך אחר כך. יודעת כמה קשה כשהילד לא שומע וכוחות כבר אזלו.",
-        "בדיוק בגלל זה אני עובדת כמו שאני עובדת: ללא שיפוטיות, ללא לחץ, ללא «אתם עושים הכל לא נכון». רק לצדכם, עד שיהיה יותר קל.",
+        "בדיוק בגלל זה אני עובדת כמו שאני עובדת: ללא שיפוטיות, ללא לחץ, ללא \"אתם עושים הכל לא נכון\". רק לצדכם, עד שיהיה יותר קל.",
       ],
       eduTitle: "השכלה וכישורים",
       edu: [
@@ -266,7 +266,7 @@ const C = {
     approach: {
       eyebrow: "גישה",
       title: "איך אני עובדת",
-      leadTitle: "אני לא «מתקנת» ילדים — אני מלווה הורים",
+      leadTitle: "אני לא \"מתקנת\" ילדים — אני מלווה הורים",
       lead: [
         "אני עובדת עם הורים.",
         "כי ילדים משתנים, כשמשתנה מה שקורה לידם.",
@@ -283,11 +283,11 @@ const C = {
         "עבודה דרך אשמה, בושה או שיפוט",
         "עצות כלליות בלי התחשבות במשפחה הספציפית שלכם",
         "הבטחות לתוצאות מהירות",
-        "«תיקון» הילד",
+        "\"תיקון\" הילד",
       ],
       resultTitle: "איך נראית התוצאה",
       result: [
-        "בבית נהיה שקט יותר. לא כי הילד «השתפר», אלא כי האווירה השתנתה.",
+        "בבית נהיה שקט יותר. לא כי הילד \"השתפר\", אלא כי האווירה השתנתה.",
         "אתם מתחילים להבין למה הילד מגיב כך.",
         "יש לכם פעולות קונקרטיות לרגעי משבר, במקום אבדן עשתונות.",
         "אתם מתפרצים פחות. וכשזה קורה, יודעים איך לצאת מזה.",
@@ -301,7 +301,7 @@ const C = {
       formatCta: "לקביעת תור",
       recommendedLabel: "עבודה עמוקה",
       cards: [
-        { name: "ייעוץ אבחוני",  price: "חינם",   period: "· 30 דקות",  description: "אם רוצים להבין מהיכן להתחיל ולראות אם אנחנו מתאימים זה לזה.", features: ["ניתוח הפנייה שלכם בזום","זיהוי «נקודות עיוורון» במצב","רשימת תיוג לצעדים ראשונים","הבנה איזה פורמט עבודה מתאים"], featured: false },
+        { name: "ייעוץ אבחוני",  price: "חינם",   period: "· 30 דקות",  description: "אם רוצים להבין מהיכן להתחיל ולראות אם אנחנו מתאימים זה לזה.", features: ["ניתוח הפנייה שלכם בזום","זיהוי \"נקודות עיוורון\" במצב","רשימת תיוג לצעדים ראשונים","הבנה איזה פורמט עבודה מתאים"], featured: false },
         { name: "שבוע ליווי",    price: "$285",    period: "· שבוע אחד", description: "אם רוצים לנסות שינויים בחיים האמיתיים, עם תמיכה לצדכם, אבל בלי תהליך ארוך.", features: ["2 ייעוצים בזום","מסלול אישי לשבוע","רשימת תיוג לניהול נסיגות והתנגדויות","שאלות ותשובות בצ׳אט אישי"], featured: false },
         { name: "קורס ליווי",    price: "$1,400",  period: "· 5 שבועות", description: "אם רוצים שינויים עמוקים ויציבים ותמיכה לאורך כל הדרך.", features: ["3 ייעוצים בזום","תוכנית אישית ל-5 שבועות","חבילת טכניקות עזרה עצמית אישית","מעקב יומיומי אחר השינויים","ניתוח מעמיק של דפוסים","בניית מערכתיות ותחזוקתה","שאלות ותשובות בצ׳אט אישי"], featured: true },
       ],
@@ -322,7 +322,7 @@ const C = {
       eyebrow: "שאלות",
       title: "שאלות שנשאלות הכי הרבה",
       items: [
-        { q: "איך מתנהל הייעוץ?",                              a: "הפגישה בזום. לפני שמתחילים אני מבקשת לתאר בקצרה את המצב, כדי לבוא מוכנה. בייעוץ עצמו אנחנו מנתחים מצב קונקרטי מהחיים שלכם, מזהים את הקשיים המרכזיים וקובעים צעדים מעשיים. זה לא שיחה «על גידול ילדים בכלל». זו עבודה עם המציאות שלכם." },
+        { q: "איך מתנהל הייעוץ?",                              a: "הפגישה בזום. לפני שמתחילים אני מבקשת לתאר בקצרה את המצב, כדי לבוא מוכנה. בייעוץ עצמו אנחנו מנתחים מצב קונקרטי מהחיים שלכם, מזהים את הקשיים המרכזיים וקובעים צעדים מעשיים. זה לא שיחה \"על גידול ילדים בכלל\". זו עבודה עם המציאות שלכם." },
         { q: "האם זה יעזור למשפחה שלי?",                     a: "תשובה כנה: לא יודעת לפני שנדבר. בדיוק בגלל זה יש ייעוץ אבחוני חינם, כדי שתוכלו להבין אם הגישה הזו מתאימה לכם. מה שיכולה לומר בוודאות: אני עובדת עם מצבים אמיתיים, לא עם תיאוריה. ואני עובדת רק עם משפחות שאני יכולה באמת לעזור להן." },
         { q: "האם הילד צריך להשתתף?",                         a: "לא. אני עובדת רק עם הורים. הילד לא משתתף בייעוצים, אבל דרך השינויים בהתנהגות שלכם, גם הוא משתנה." },
         { q: "מתי יורגשו תוצאות?",                            a: "שינויים ראשונים הורים רבים מרגישים כבר אחרי הייעוץ הראשון. מופיעה בהירות וכלים קונקרטיים. שינויים יציבים הם תהליך. בדרך כלל משפחות רואות התקדמות אמיתית תוך מספר שבועות של תרגול. אני לא מבטיחה נסים מהירים. אני מבטיחה עבודה כנה." },
@@ -348,7 +348,7 @@ const C = {
       copyright: "© 2025 נטליה סיגולוביץ׳. כל הזכויות שמורות.",
     },
     cookie: {
-      text: "האתר משתמש בעוגיות לשיפור חוויית הגלישה. בלחיצה על «אישור» אתם מסכימים לשימוש בעוגיות בהתאם למדיניות הפרטיות.",
+      text: "האתר משתמש בעוגיות לשיפור חוויית הגלישה. בלחיצה על \"אישור\" אתם מסכימים לשימוש בעוגיות בהתאם למדיניות הפרטיות.",
       accept: "אישור", decline: "סירוב",
     },
   },
@@ -458,7 +458,7 @@ export default function Page() {
     );
     els.forEach(el => obs.observe(el));
     return () => obs.disconnect();
-  }, []);
+  }, [lang]);
 
   const switchLang = (l: Lang) => {
     if (l === lang) return;
@@ -619,40 +619,40 @@ export default function Page() {
       {/* ══ APPROACH ══ */}
       <section id="approach" style={{ padding: "clamp(56px,9vw,104px) 0" }}>
         <div style={mw}>
-          <div className="io-up" style={{ maxWidth: 680, marginBottom: "clamp(28px,4vw,44px)" }}>
+          <div className="io-up" style={{ maxWidth: 680, marginBottom: "clamp(28px,4vw,44px)", textAlign: "start" }}>
             <Eyebrow>{t.approach.eyebrow}</Eyebrow>
-            <h2 style={{ margin: "12px 0 0", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: "clamp(30px,4.8vw,46px)", lineHeight: 1.06, letterSpacing: "-1.4px", color: "#0a0a0a" }}>{t.approach.title}</h2>
+            <h2 style={{ margin: "12px 0 0", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: "clamp(30px,4.8vw,46px)", lineHeight: 1.06, letterSpacing: "-1.4px", color: "#0a0a0a", textAlign: "start" }}>{t.approach.title}</h2>
           </div>
-          <div className="io-up" style={{ background: "#1a3a3a", borderRadius: 24, padding: "clamp(30px,4vw,52px)", marginBottom: 28 }}>
-            <h3 style={{ margin: "0 0 18px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: "clamp(24px,3.4vw,32px)", letterSpacing: "-0.6px", lineHeight: 1.1, color: "#ffffff" }}>{t.approach.leadTitle}</h3>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(230px,1fr))", gap: 20 }}>
-              {t.approach.lead.map((p, i) => <p key={i} style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "rgba(255,255,255,0.82)" }}>{p}</p>)}
+          <div className="io-up" style={{ background: "#1a3a3a", borderRadius: 24, padding: "clamp(24px,4vw,52px)", marginBottom: 28, textAlign: "start" }}>
+            <h3 style={{ margin: "0 0 20px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: "clamp(24px,3.4vw,32px)", letterSpacing: "-0.6px", lineHeight: 1.2, color: "#ffffff", textAlign: "start" }}>{t.approach.leadTitle}</h3>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(230px, 100%), 1fr))", gap: 20 }}>
+              {t.approach.lead.map((p, i) => <p key={i} style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "rgba(255,255,255,0.85)", textAlign: "start" }}>{p}</p>)}
             </div>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 18, marginBottom: 40 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(260px, 100%), 1fr))", gap: 18, marginBottom: 40 }}>
             {t.approach.principles.map((pr, i) => (
-              <div key={i} className="io-card" style={{ background: "#faf5e8", border: "1px solid #efe7d6", borderRadius: 16, padding: "26px 24px", "--d": `${i * 80}ms` } as React.CSSProperties}>
-                <h4 style={{ margin: "0 0 10px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 18, letterSpacing: "-0.2px", color: "#0a0a0a" }}>{pr.title}</h4>
-                <p style={{ margin: 0, fontSize: 15, lineHeight: 1.6, color: "#5a5a5a" }}>{pr.text}</p>
+              <div key={i} className="io-card" style={{ background: "#faf5e8", border: "1px solid #efe7d6", borderRadius: 16, padding: "26px 24px", "--d": `${i * 80}ms`, textAlign: "start" } as React.CSSProperties}>
+                <h4 style={{ margin: "0 0 10px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 18, letterSpacing: "-0.2px", color: "#0a0a0a", textAlign: "start" }}>{pr.title}</h4>
+                <p style={{ margin: 0, fontSize: 15, lineHeight: 1.6, color: "#5a5a5a", textAlign: "start" }}>{pr.text}</p>
               </div>
             ))}
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: "clamp(24px,4vw,48px)" }}>
-            <div>
-              <h3 style={{ margin: "0 0 18px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 22, letterSpacing: "-0.4px", color: "#0a0a0a" }}>{t.approach.notTitle}</h3>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(300px, 100%), 1fr))", gap: "clamp(24px,4vw,48px)" }}>
+            <div style={{ textAlign: "start" }}>
+              <h3 style={{ margin: "0 0 18px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 22, letterSpacing: "-0.4px", color: "#0a0a0a", textAlign: "start" }}>{t.approach.notTitle}</h3>
               <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 12 }}>
                 {t.approach.not.map((n, i) => (
-                  <li key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", fontSize: 15, lineHeight: 1.55, color: "#5a5a5a" }}>
+                  <li key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", fontSize: 15, lineHeight: 1.55, color: "#5a5a5a", textAlign: "start" }}>
                     <span style={{ flexShrink: 0, width: 20, height: 20, borderRadius: "50%", background: "#f4e4d6", color: "#c08a5a", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 13, marginTop: 1 }}>✕</span>{n}
                   </li>
                 ))}
               </ul>
             </div>
-            <div>
-              <h3 style={{ margin: "0 0 18px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 22, letterSpacing: "-0.4px", color: "#0a0a0a" }}>{t.approach.resultTitle}</h3>
+            <div style={{ textAlign: "start" }}>
+              <h3 style={{ margin: "0 0 18px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 22, letterSpacing: "-0.4px", color: "#0a0a0a", textAlign: "start" }}>{t.approach.resultTitle}</h3>
               <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 12 }}>
                 {t.approach.result.map((r, i) => (
-                  <li key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", fontSize: 15, lineHeight: 1.55, color: "#3a3a3a" }}>
+                  <li key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", fontSize: 15, lineHeight: 1.55, color: "#3a3a3a", textAlign: "start" }}>
                     <span style={{ flexShrink: 0, width: 20, height: 20, borderRadius: "50%", background: "#d8ece3", color: "#2f7a5e", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 12, marginTop: 1 }}>✓</span>{r}
                   </li>
                 ))}
