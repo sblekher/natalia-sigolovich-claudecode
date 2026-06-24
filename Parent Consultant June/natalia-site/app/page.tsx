@@ -546,7 +546,7 @@ export default function Page() {
           </div>
           <div className="requests-cards">
             {t.requests.items.map((item, i) => (
-              <div key={item.title} className="io-card" style={{ background: "#fffaf0", border: "1px solid #efe7d6", borderRadius: 16, padding: "26px 24px", "--d": `${i * 80}ms`, "--hover-border": item.color } as React.CSSProperties}>
+              <div key={i} className="io-card" style={{ background: "#fffaf0", border: "1px solid #efe7d6", borderRadius: 16, padding: "26px 24px", "--d": `${i * 80}ms`, "--hover-border": item.color } as React.CSSProperties}>
                 <span style={{ display: "block", width: 12, height: 12, borderRadius: "50%", background: item.color, boxShadow: "inset -3px -3px 5px rgba(10,10,10,0.14)", marginBottom: 16 }} />
                 <h3 style={{ margin: "0 0 8px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 19, letterSpacing: "-0.3px", color: "#0a0a0a" }}>{item.title}</h3>
                 <p style={{ margin: 0, fontSize: 15, lineHeight: 1.55, color: "#5a5a5a" }}>{item.text}</p>
@@ -606,7 +606,7 @@ export default function Page() {
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(244px,1fr))", gap: 18 }}>
             {t.changes.items.map((c, i) => (
-              <div key={c.title} className="io-card" style={{ background: toneBg[c.color] ?? "#fffaf0", border: "1px solid #efe7d6", borderRadius: 16, padding: "26px 24px", "--d": `${i * 80}ms`, "--hover-border": toneDot[c.color] } as React.CSSProperties}>
+              <div key={i} className="io-card" style={{ background: toneBg[c.color] ?? "#fffaf0", border: "1px solid #efe7d6", borderRadius: 16, padding: "26px 24px", "--d": `${i * 80}ms`, "--hover-border": toneDot[c.color] } as React.CSSProperties}>
                 <span style={{ display: "block", width: 10, height: 10, borderRadius: "50%", background: toneDot[c.color] ?? "#ccc", marginBottom: 16 }} />
                 <h3 style={{ margin: "0 0 8px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 18, letterSpacing: "-0.2px", color: "#0a0a0a" }}>{c.title}</h3>
                 <p style={{ margin: 0, fontSize: 15, lineHeight: 1.6, color: "#5a5a5a" }}>{c.text}</p>
@@ -631,7 +631,7 @@ export default function Page() {
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 18, marginBottom: 40 }}>
             {t.approach.principles.map((pr, i) => (
-              <div key={pr.title} className="io-card" style={{ background: "#faf5e8", border: "1px solid #efe7d6", borderRadius: 16, padding: "26px 24px", "--d": `${i * 80}ms` } as React.CSSProperties}>
+              <div key={i} className="io-card" style={{ background: "#faf5e8", border: "1px solid #efe7d6", borderRadius: 16, padding: "26px 24px", "--d": `${i * 80}ms` } as React.CSSProperties}>
                 <h4 style={{ margin: "0 0 10px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 18, letterSpacing: "-0.2px", color: "#0a0a0a" }}>{pr.title}</h4>
                 <p style={{ margin: 0, fontSize: 15, lineHeight: 1.6, color: "#5a5a5a" }}>{pr.text}</p>
               </div>
@@ -673,7 +673,7 @@ export default function Page() {
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(282px,1fr))", gap: 20, alignItems: "start" }}>
             {t.formats.cards.map((card, i) => (
-              <div key={card.name} style={{ position: "relative" }}>
+              <div key={i} style={{ position: "relative" }}>
                 {i === 2 && (
                   <div style={{ position: "absolute", top: -13, insetInlineStart: 24, zIndex: 2 }}>
                     <Badge tone="ochre" uppercase>{t.formats.recommendedLabel}</Badge>
@@ -714,7 +714,7 @@ export default function Page() {
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: 18 }}>
             {t.reviews.items.map((rv, i) => (
-              <div key={rv.name} className="io-card" style={{ background: "#faf5e8", border: "1px solid #efe7d6", borderRadius: 18, padding: "26px 24px", display: "flex", flexDirection: "column", "--d": `${i * 80}ms` } as React.CSSProperties}>
+              <div key={i} className="io-card" style={{ background: "#faf5e8", border: "1px solid #efe7d6", borderRadius: 18, padding: "26px 24px", display: "flex", flexDirection: "column", "--d": `${i * 80}ms` } as React.CSSProperties}>
                 <p style={{ margin: "0 0 20px", fontSize: 15, lineHeight: 1.65, color: "#3a3a3a", flex: 1 }}>&ldquo;{rv.quote}&rdquo;</p>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   <div style={{ width: 36, height: 36, borderRadius: "50%", background: "#ffb084", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 14, color: "#fff", flexShrink: 0 }}>{rv.name[0]}</div>
