@@ -510,39 +510,45 @@ export default function Page() {
       <div id="top" />
 
       {/* ══ HERO ══ */}
-      <section style={{ padding: "clamp(44px,7vw,84px) 0 clamp(48px,8vw,90px)" }}>
+      <section style={{ padding: "clamp(44px,7vw,84px) 0 clamp(48px,8vw,90px)", background: "linear-gradient(180deg, #fffaf0 0%, #e6f5f1 100%)" }}>
         <div className="hero-grid" style={{ ...mw, gap: "clamp(36px,5vw,64px)" }}>
-          <div className="hero-stagger" style={{ background: "#ffffff", border: "1px solid #efe7d6", borderRadius: 20, padding: "clamp(24px,3vw,34px)", boxShadow: "0 1px 3px rgba(10,10,10,0.06), 0 24px 50px rgba(10,10,10,0.12)" }}>
+          <div className="hero-stagger" style={{ background: "#ffffff", border: "1px solid #efe7d6", borderRadius: 20, padding: "clamp(24px,3vw,34px)", boxShadow: "0 1px 3px rgba(10,10,10,0.02), 0 16px 36px rgba(165,155,135,0.08)" }}>
             <div style={{ display: "inline-flex", marginBottom: 22 }}><Badge tone="mint" uppercase>{t.hero.badge}</Badge></div>
-            <h1 style={{ margin: 0, fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: "clamp(36px,5.6vw,60px)", lineHeight: 1.03, letterSpacing: "-2px", color: "#0a0a0a" }}>{t.hero.title}</h1>
-            <p style={{ margin: "22px 0 0", fontSize: "clamp(17px,2.2vw,19px)", lineHeight: 1.55, color: "#3a3a3a", maxWidth: "48ch" }}>{t.hero.subtitle}</p>
+            <h1 style={{ margin: 0, fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: "clamp(32px,4.8vw,48px)", lineHeight: 1.2, letterSpacing: "-0.5px", color: "#222222" }}>{t.hero.title}</h1>
+            <p style={{ margin: "22px 0 0", fontSize: "clamp(16px,2vw,17px)", lineHeight: 1.55, color: "#4a4a4a", maxWidth: "48ch" }}>{t.hero.subtitle}</p>
             <a href="#contacts" className="btn btn-primary btn-lg" style={{ width: "100%", marginTop: 32 }}>{t.hero.cta}</a>
             <p style={{ margin: "14px 0 0", fontSize: 14, color: "#6a6a6a" }}>{t.hero.reassurance}</p>
           </div>
           <div className="hero-photo-reveal hero-slot">
-            <div className="blob-b" style={{ position: "absolute", bottom: "-12%", insetInlineEnd: "-12%", width: "80%", aspectRatio: "1 / 1", background: "#a4d4c5", borderRadius: "50% / 60% 58% 42% 40%", boxShadow: "inset -6px -8px 12px rgba(10,10,10,0.12), inset 6px 6px 12px rgba(255,255,255,0.4)" }} />
-            <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 420, marginInline: "auto" }}>
-              <Image src="/family-illustration.png" alt="Иллюстрация семьи с детьми" width={1080} height={1350} sizes="(max-width: 768px) 86vw, 420px" priority style={{ width: "100%", height: "auto" }} />
+            <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 500, aspectRatio: "1 / 0.88", overflow: "hidden", marginInline: "auto" }}>
+              <div className="illustration-breathe" style={{ width: "100%", height: "auto" }}>
+                <Image src="/family-illustration.png" alt="Иллюстрация семьи с детьми" width={819} height={1024} sizes="(max-width: 768px) 86vw, 500px" priority style={{ width: "100%", height: "auto" }} />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* ══ REQUESTS ══ */}
-      <section style={{ padding: "clamp(52px,8vw,96px) 0", background: "#faf5e8" }}>
-        <div style={mw}>
-          <div className="io-up" style={{ maxWidth: 620, marginBottom: "clamp(28px,4vw,44px)" }}>
-            <Eyebrow>{t.requests.eyebrow}</Eyebrow>
-            <RubikH2>{t.requests.title}</RubikH2>
+      <section className="requests-section" style={{ padding: "clamp(52px,8vw,96px) 0", background: "#e6f5f1" }}>
+        <div style={{ ...mw, display: "flex", alignItems: "stretch", gap: "clamp(24px,3vw,48px)" }}>
+          <div className="requests-illus" style={{ flexShrink: 0, width: 210, alignSelf: "flex-end" }}>
+            <Image src="/requests-illustration.png" alt="" width={1254} height={1254} style={{ width: "100%", height: "auto", display: "block" }} />
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(248px,1fr))", gap: 18 }}>
-            {t.requests.items.map((item, i) => (
-              <div key={item.title} className="io-card" style={{ background: "#fffaf0", border: "1px solid #efe7d6", borderRadius: 16, padding: "26px 24px", "--d": `${i * 80}ms`, "--hover-border": item.color } as React.CSSProperties}>
-                <span style={{ display: "block", width: 12, height: 12, borderRadius: "50%", background: item.color, boxShadow: "inset -3px -3px 5px rgba(10,10,10,0.14)", marginBottom: 16 }} />
-                <h3 style={{ margin: "0 0 8px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 19, letterSpacing: "-0.3px", color: "#0a0a0a" }}>{item.title}</h3>
-                <p style={{ margin: 0, fontSize: 15, lineHeight: 1.55, color: "#5a5a5a" }}>{item.text}</p>
-              </div>
-            ))}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div className="io-up" style={{ maxWidth: 620, marginBottom: "clamp(28px,4vw,44px)" }}>
+              <Eyebrow>{t.requests.eyebrow}</Eyebrow>
+              <RubikH2>{t.requests.title}</RubikH2>
+            </div>
+            <div className="requests-cards">
+              {t.requests.items.map((item, i) => (
+                <div key={item.title} className="io-card" style={{ background: "#fffaf0", border: "1px solid #efe7d6", borderRadius: 16, padding: "26px 24px", "--d": `${i * 80}ms`, "--hover-border": item.color } as React.CSSProperties}>
+                  <span style={{ display: "block", width: 12, height: 12, borderRadius: "50%", background: item.color, boxShadow: "inset -3px -3px 5px rgba(10,10,10,0.14)", marginBottom: 16 }} />
+                  <h3 style={{ margin: "0 0 8px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 19, letterSpacing: "-0.3px", color: "#0a0a0a" }}>{item.title}</h3>
+                  <p style={{ margin: 0, fontSize: 15, lineHeight: 1.55, color: "#5a5a5a" }}>{item.text}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

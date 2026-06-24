@@ -83,6 +83,16 @@ body {
 .blob-a { animation: ns-float-a 11s ease-in-out infinite; will-change: transform; }
 .blob-b { animation: ns-float-b 9s  ease-in-out infinite; will-change: transform; }
 
+/* Slow organic breathing/floating for the family illustration */
+@keyframes ns-breathe {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-4px) rotate(0.8deg); }
+}
+.illustration-breathe {
+  animation: ns-breathe 12s ease-in-out infinite;
+  will-change: transform;
+}
+
 /* Entrance fade-up (hero load-in + scroll reveals) */
 @keyframes ns-fade-up {
   from { opacity: 0; transform: translateY(22px); }
@@ -133,7 +143,28 @@ body {
 ─────────────────────────────────────────────── */
 .hero-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: center; }
 /* Illustration column: decorative blob clipped to the column edge, illustration centered on top */
-.hero-slot { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.hero-slot { position: relative; overflow: visible; display: flex; align-items: center; justify-content: center; }
+
+/* ─────────────────────────────────────────────
+   REQUESTS LAYOUT
+─────────────────────────────────────────────── */
+.requests-section { position: relative; }
+.requests-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+
 @media (max-width: 768px) {
   .hero-grid { grid-template-columns: 1fr; }
+  .requests-illus { display: none; }
+  .requests-cards { grid-template-columns: 1fr; }
+  /* Watermark sits in section's bottom-right, visible in the bottom padding below the cards */
+  .requests-section::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 160px;
+    height: 200px;
+    background: url('/requests-illustration.png') bottom right / contain no-repeat;
+    opacity: 0.33;
+    pointer-events: none;
+  }
 }
