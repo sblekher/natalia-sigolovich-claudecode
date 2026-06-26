@@ -14,8 +14,8 @@ const C = {
       cta: "Записаться",
       links: [
         { label: "Обо мне", href: "#about" },
-        { label: "Услуги", href: "#services" },
         { label: "Подход", href: "#approach" },
+        { label: "Услуги", href: "#services" },
         { label: "Отзывы", href: "#reviews" },
         { label: "Вопросы", href: "#faq" },
         { label: "Контакты", href: "#contacts" },
@@ -187,8 +187,8 @@ const C = {
       cta: "לקביעת תור",
       links: [
         { label: "אודות",    href: "#about"    },
-        { label: "שירותים", href: "#services"  },
         { label: "גישה",    href: "#approach"  },
+        { label: "שירותים", href: "#services"  },
         { label: "המלצות",  href: "#reviews"   },
         { label: "שאלות",   href: "#faq"       },
         { label: "צרו קשר", href: "#contacts"  },
@@ -421,6 +421,8 @@ export default function Page() {
   const [cookieVisible, setCookieVisible] = useState(false);
   const [activeDot, setActiveDot] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const [rvActive, setRvActive] = useState(0);
+  const rvScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let l: Lang = "ru";
@@ -474,6 +476,23 @@ export default function Page() {
     return () => el.removeEventListener("scroll", onScroll);
   }, []);
 
+  const scrollToRv = (idx: number) => {
+    const track = rvScrollRef.current;
+    if (!track || !track.children.length) return;
+    const card = track.children[idx] as HTMLElement;
+    track.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
+    setRvActive(idx);
+  };
+
+  const handleRvScroll = () => {
+    const track = rvScrollRef.current;
+    if (!track || !track.children.length) return;
+    const card = track.children[0] as HTMLElement;
+    const scrollLeft = Math.abs(track.scrollLeft);
+    const idx = Math.round(scrollLeft / (card.offsetWidth + 20));
+    setRvActive(Math.max(0, Math.min(idx, t.reviews.items.length - 1)));
+  };
+
   const switchLang = (l: Lang) => {
     if (l === lang) return;
     try { localStorage.setItem("ns_lang", l); } catch (_) {}
@@ -506,12 +525,12 @@ export default function Page() {
           </nav>
           <div style={{ display: "flex", alignItems: "center", gap: 14, marginInlineStart: "auto" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span onClick={() => switchLang("ru")} style={{ fontSize: 14, fontWeight: isHe ? 500 : 700, color: isHe ? "#9a9a9a" : "#0a0a0a", cursor: "pointer" }}>RU</span>
-              <span style={{ fontSize: 13, color: "#c8c2b4" }}>|</span>
-              <span onClick={() => switchLang("he")} style={{ fontSize: 15, fontWeight: isHe ? 700 : 500, color: isHe ? "#0a0a0a" : "#9a9a9a", cursor: "pointer" }}>עב</span>
+              <button onClick={() => switchLang("ru")} aria-pressed={!isHe} aria-label="Русский язык" style={{ fontSize: 14, fontWeight: isHe ? 500 : 700, color: isHe ? "#9a9a9a" : "#0a0a0a", cursor: "pointer", background: "none", border: "none", padding: 0, fontFamily: "inherit" }}>RU</button>
+              <span style={{ fontSize: 13, color: "#c8c2b4" }} aria-hidden="true">|</span>
+              <button onClick={() => switchLang("he")} aria-pressed={isHe} aria-label="עברית" style={{ fontSize: 15, fontWeight: isHe ? 700 : 500, color: isHe ? "#0a0a0a" : "#9a9a9a", cursor: "pointer", background: "none", border: "none", padding: 0, fontFamily: "inherit" }}>עב</button>
             </div>
             <span className="ns-hide-sm"><a href="#contacts" className="btn btn-primary btn-sm">{t.nav.cta}</a></span>
-            <button className="ns-burger" onClick={() => setMobileOpen(v => !v)} style={{ display: "none", alignItems: "center", justifyContent: "center", width: 40, height: 40, border: "1px solid rgba(10,10,10,0.1)", background: "#fffaf0", borderRadius: 10, cursor: "pointer", padding: 0 }}>
+            <button className="ns-burger" onClick={() => setMobileOpen(v => !v)} aria-label={isHe ? (mobileOpen ? "סגור תפריט" : "פתח תפריט") : (mobileOpen ? "Закрыть меню" : "Открыть меню")} aria-expanded={mobileOpen} style={{ display: "none", alignItems: "center", justifyContent: "center", width: 40, height: 40, border: "1px solid rgba(10,10,10,0.1)", background: "#fffaf0", borderRadius: 10, cursor: "pointer", padding: 0 }}>
               <span style={{ display: "block", width: 18, height: 2, background: "#0a0a0a", boxShadow: "0 -5px 0 #0a0a0a, 0 5px 0 #0a0a0a" }} />
             </button>
           </div>
@@ -569,7 +588,7 @@ export default function Page() {
       </section>
 
       {/* ══ ABOUT ══ */}
-      <section id="about" style={{ padding: "clamp(56px,9vw,104px) 0", position: "relative", background: "#fffaf0" }}>
+      <section id="about" style={{ padding: "40px 0", position: "relative", background: "#fffaf0" }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/deco-hand-cream.png"
@@ -590,7 +609,7 @@ export default function Page() {
                   <Image src="/natalia.jpg" alt={t.about.title} width={600} height={800} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 </div>
               </div>
-              <h3 className="about-name">{t.about.title}</h3>
+              <h2 className="about-name">{t.about.title}</h2>
               <p className="about-subtitle">{t.about.subtitle}</p>
             </div>
             
@@ -604,7 +623,7 @@ export default function Page() {
               </div>
               
               <div className="about-why-card">
-                <h4>{t.about.whyTitle}</h4>
+                <h3>{t.about.whyTitle}</h3>
                 {t.about.why.map((p, i) => <p key={i}>{p}</p>)}
               </div>
               
@@ -618,7 +637,7 @@ export default function Page() {
       </section>
 
       {/* ══ CHANGES ══ */}
-      <section style={{ padding: "clamp(52px,8vw,96px) 0", background: "#faf5e8" }}>
+      <section style={{ padding: "clamp(52px,8vw,96px) 0", background: "#fffaf0" }}>
         <div style={mw}>
           <div className="io-up" style={{ maxWidth: 640, marginBottom: "clamp(28px,4vw,44px)" }}>
             <Eyebrow>{t.changes.eyebrow}</Eyebrow>
@@ -637,7 +656,7 @@ export default function Page() {
       </section>
 
       {/* ══ APPROACH ══ */}
-      <section id="approach" style={{ padding: "clamp(56px,9vw,104px) 0" }}>
+      <section id="approach" style={{ padding: "clamp(56px,9vw,104px) 0", background: "#f5edd8" }}>
         <div style={mw}>
           {/* Section header */}
           <div className="io-up" style={{ maxWidth: 680, marginBottom: "clamp(32px,5vw,52px)", textAlign: "start" }}>
@@ -658,7 +677,7 @@ export default function Page() {
           {/* Principle cards */}
           <div className="io-up" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))", gap: 18, marginBottom: "clamp(48px,7vw,72px)" }}>
             {t.approach.principles.map((pr, i) => (
-              <div key={i} className="io-card" style={{ background: "#faf5e8", borderRadius: 16, padding: "26px 24px 28px", "--d": `${i * 80}ms` } as React.CSSProperties}>
+              <div key={i} className="io-card" style={{ background: "#fffaf0", borderRadius: 16, padding: "26px 24px 28px", "--d": `${i * 80}ms` } as React.CSSProperties}>
                 <h4 style={{ margin: "0 0 10px", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 17, letterSpacing: "-0.2px", color: "#0a0a0a", textAlign: "start" }}>{pr.title}</h4>
                 <p style={{ margin: 0, fontSize: 14, lineHeight: 1.65, color: "#6a6a6a", textAlign: "start" }}>{pr.text}</p>
               </div>
@@ -692,7 +711,7 @@ export default function Page() {
       </section>
 
       {/* ══ FORMATS ══ */}
-      <section id="services" style={{ padding: "clamp(52px,8vw,96px) 0", background: "#faf5e8" }}>
+      <section id="services" style={{ padding: "clamp(52px,8vw,96px) 0", background: "#fffaf0" }}>
         <div style={mw}>
           <div className="io-up" style={{ maxWidth: 680, marginBottom: "clamp(26px,4vw,40px)" }}>
             <Eyebrow>{t.formats.eyebrow}</Eyebrow>
@@ -746,25 +765,48 @@ export default function Page() {
             <Eyebrow>{t.reviews.eyebrow}</Eyebrow>
             <h2 style={{ margin: "12px 0 0", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: "clamp(30px,4.8vw,46px)", lineHeight: 1.06, letterSpacing: "-1.4px", color: "#0a0a0a" }}>{t.reviews.title}</h2>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: 18 }}>
-            {t.reviews.items.map((rv, i) => (
-              <div key={i} className="io-card" style={{ background: "#faf5e8", border: "1px solid #efe7d6", borderRadius: 18, padding: "26px 24px", display: "flex", flexDirection: "column", "--d": `${i * 80}ms` } as React.CSSProperties}>
-                <p style={{ margin: "0 0 20px", fontSize: 15, lineHeight: 1.65, color: "#3a3a3a", flex: 1 }}>&ldquo;{rv.quote}&rdquo;</p>
-                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <div style={{ width: 36, height: 36, borderRadius: "50%", background: "#ffb084", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 14, color: "#fff", flexShrink: 0 }}>{rv.name[0]}</div>
-                  <div>
-                    <p style={{ margin: 0, fontWeight: 600, fontSize: 14, color: "#0a0a0a" }}>{rv.name}</p>
-                    <p style={{ margin: 0, fontSize: 12, color: "#8a8a8a" }}>{rv.role}</p>
+          {/* carousel — scroll-snap horizontal, always on mobile, on desktop when >3 items */}
+          <div style={{ position: "relative" }}>
+            <div ref={rvScrollRef} className="rv-track" onScroll={handleRvScroll}>
+              {t.reviews.items.map((rv, i) => {
+                const avatarBg = (["#ffb084","#e8b94a","#b8a4ed","#a4d4c5"] as const)[i % 4];
+                const StarIcon = () => (
+                  <svg width="16" height="16" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.525.464a.5.5 0 0 1 .95 0l2.107 6.482a.5.5 0 0 0 .475.346h6.817a.5.5 0 0 1 .294.904l-5.515 4.007a.5.5 0 0 0-.181.559l2.106 6.483a.5.5 0 0 1-.77.559l-5.514-4.007a.5.5 0 0 0-.588 0l-5.514 4.007a.5.5 0 0 1-.77-.56l2.106-6.482a.5.5 0 0 0-.181-.56L.832 8.197a.5.5 0 0 1 .294-.904h6.817a.5.5 0 0 0 .475-.346z" fill={avatarBg} />
+                  </svg>
+                );
+                return (
+                  <div key={i} className="rv-card io-card" style={{ position: "relative", background: "#ffffff", border: "1px solid #efe7d6", borderRadius: 18, padding: "0 24px 24px", display: "flex", flexDirection: "column", boxShadow: "0 4px 20px rgba(10,10,10,0.06)", "--d": `${i * 80}ms` } as React.CSSProperties}>
+                    {/* floating avatar */}
+                    <div style={{ position: "absolute", top: -48, left: "50%", transform: "translateX(-50%)", width: 96, height: 96, borderRadius: "50%", background: avatarBg, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 600, fontSize: 34, color: "#fff", border: "4px solid #ffffff", flexShrink: 0 }}>
+                      {rv.name[0]}
+                    </div>
+                    {/* name */}
+                    <div style={{ textAlign: "center", paddingTop: 56, marginBottom: 16 }}>
+                      <p style={{ margin: 0, fontWeight: 600, fontSize: 15, color: "#0a0a0a" }}>{rv.name}</p>
+                    </div>
+                    {/* quote */}
+                    <p style={{ margin: "0 0 20px", fontSize: 14, lineHeight: 1.7, color: "#3a3a3a", flex: 1, textAlign: "center" }}>&ldquo;{rv.quote}&rdquo;</p>
+                    {/* stars */}
+                    <div style={{ display: "flex", justifyContent: "center", gap: 3 }}>
+                      {[0,1,2,3,4].map(s => <StarIcon key={s} />)}
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                );
+              })}
+            </div>
+            {/* dot indicators */}
+            <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 28 }}>
+              {t.reviews.items.map((rv, i) => (
+                <button key={i} onClick={() => scrollToRv(i)} aria-label={rv.name} aria-pressed={rvActive === i} style={{ width: 8, height: 8, borderRadius: "50%", background: rvActive === i ? "#1a3a3a" : "#d8cfc4", border: "none", cursor: "pointer", padding: 0, transition: "background 0.2s" }} />
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* ══ FAQ ══ */}
-      <section id="faq" style={{ padding: "clamp(52px,8vw,96px) 0", background: "#faf5e8" }}>
+      <section id="faq" style={{ padding: "clamp(52px,8vw,96px) 0", background: "#fffaf0" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", paddingLeft: px, paddingRight: px }}>
           <div className="io-up" style={{ marginBottom: "clamp(26px,4vw,40px)" }}>
             <Eyebrow>{t.faq.eyebrow}</Eyebrow>
@@ -775,11 +817,11 @@ export default function Page() {
               const open = openFaq === i;
               return (
                 <div key={i} style={{ background: "#fffaf0", border: "1px solid #efe7d6", borderRadius: 16, overflow: "hidden" }}>
-                  <button onClick={() => setOpenFaq(open ? -1 : i)} style={{ width: "100%", display: "flex", alignItems: "center", gap: 16, padding: "20px 24px", background: "transparent", border: "none", cursor: "pointer", textAlign: "start", fontFamily: "var(--font-inter,sans-serif)" }}>
+                  <button onClick={() => setOpenFaq(open ? -1 : i)} aria-expanded={open} aria-controls={`faq-answer-${i}`} style={{ width: "100%", display: "flex", alignItems: "center", gap: 16, padding: "20px 24px", background: "transparent", border: "none", cursor: "pointer", textAlign: "start", fontFamily: "var(--font-inter,sans-serif)" }}>
                     <span style={{ flex: 1, fontFamily: "var(--font-rubik,sans-serif)", fontWeight: 500, fontSize: 17, letterSpacing: "-0.2px", color: "#0a0a0a", textAlign: isHe ? "right" : "left" }}>{item.q}</span>
-                    <span style={{ flexShrink: 0, width: 28, height: 28, borderRadius: "50%", background: open ? "#1a3a3a" : "#f4ead8", color: open ? "#ffffff" : "#b07a4a", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 18, lineHeight: 1 }}>{open ? "−" : "+"}</span>
+                    <span aria-hidden="true" style={{ flexShrink: 0, width: 28, height: 28, borderRadius: "50%", background: open ? "#1a3a3a" : "#f4ead8", color: open ? "#ffffff" : "#b07a4a", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 18, lineHeight: 1 }}>{open ? "−" : "+"}</span>
                   </button>
-                  {open && <p style={{ margin: 0, padding: "0 24px 22px", fontSize: 15, lineHeight: 1.65, color: "#4a4a4a" }}>{item.a}</p>}
+                  {open && <p id={`faq-answer-${i}`} style={{ margin: 0, padding: "0 24px 22px", fontSize: 15, lineHeight: 1.65, color: "#4a4a4a" }}>{item.a}</p>}
                 </div>
               );
             })}
@@ -790,7 +832,7 @@ export default function Page() {
       {/* ══ CONTACTS ══ */}
       <section id="contacts" style={{ padding: "clamp(56px,9vw,108px) 0" }}>
         <div style={mw}>
-          <div style={{ position: "relative", overflow: "hidden", background: "#faf5e8", border: "1px solid #efe7d6", borderRadius: 28, padding: "clamp(36px,6vw,72px) clamp(28px,5vw,64px)", textAlign: "center" }}>
+          <div style={{ position: "relative", overflow: "hidden", background: "#fffaf0", border: "1px solid #efe7d6", borderRadius: 28, padding: "clamp(36px,6vw,72px) clamp(28px,5vw,64px)", textAlign: "center" }}>
             <div className="blob-b" style={{ position: "absolute", top: -34, insetInlineStart: -24, width: 130, height: 130, background: "#ffb084", opacity: 0.6, borderRadius: "50%", boxShadow: "inset -8px -10px 18px rgba(10,10,10,0.12)" }} />
             <div className="blob-a" style={{ position: "absolute", bottom: -40, insetInlineEnd: 30, width: 110, height: 110, background: "#a4d4c5", opacity: 0.6, borderRadius: "50% / 58% 56% 44% 42%", boxShadow: "inset -8px -10px 18px rgba(10,10,10,0.1)" }} />
             <div className="io-up" style={{ position: "relative", zIndex: 2, maxWidth: 680, margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -825,7 +867,7 @@ export default function Page() {
           <div style={{ flex: "0 1 auto", display: "flex", flexDirection: "column", gap: 10, alignItems: "flex-start" }}>
             <a href="mailto:natashasigolovich@gmail.com" style={{ fontSize: 14, color: "#4a4a4a", textDecoration: "none" }}>natashasigolovich@gmail.com</a>
             <span style={{ fontSize: 14, color: "#6a6a6a" }}>+972 52-454-8345</span>
-            <a href="#" style={{ fontSize: 14, color: "#6a6a6a", textDecoration: "none", borderBottom: "1px solid rgba(10,10,10,0.15)", paddingBottom: 1 }}>{t.footer.privacy}</a>
+            <a href="/privacy" style={{ fontSize: 14, color: "#6a6a6a", textDecoration: "none", borderBottom: "1px solid rgba(10,10,10,0.15)", paddingBottom: 1 }}>{t.footer.privacy}</a>
           </div>
         </div>
         <div style={{ borderTop: "1px solid #e7ddc9" }}>

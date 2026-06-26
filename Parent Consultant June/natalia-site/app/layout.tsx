@@ -17,17 +17,41 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://natashasigolovich.com"),
   title: "Наталья Сиголович — консультант по детско-родительским отношениям",
   description:
     "Помогаю родителям детей от 2 до 9 лет сохранять спокойствие и управлять своими реакциями в самые сложные моменты.",
+  openGraph: {
+    title: "Наталья Сиголович — консультант по детско-родительским отношениям",
+    description:
+      "Помогаю родителям детей от 2 до 9 лет сохранять спокойствие и выбирать реакцию в самые сложные моменты.",
+    type: "website",
+    locale: "ru_RU",
+    images: [
+      {
+        url: "/natalia.jpg",
+        width: 600,
+        height: 800,
+        alt: "Наталья Сиголович — консультант по детско-родительским отношениям",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Наталья Сиголович — консультант по детско-родительским отношениям",
+    description:
+      "Помогаю родителям детей от 2 до 9 лет сохранять спокойствие и выбирать реакцию в самые сложные моменты.",
+    images: ["/natalia.jpg"],
+  },
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ru" className={`${rubik.variable} ${inter.variable}`}>
+    <html lang="ru" suppressHydrationWarning className={`${rubik.variable} ${inter.variable}`}>
       <head>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link
           href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&display=swap"
           rel="stylesheet"
